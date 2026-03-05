@@ -95,5 +95,21 @@ get_errors(main.c)
 	2. 設定 ARM GCC `compilerPath` 與 `windows-gcc-arm` IntelliSense 模式。
 	3. 保留 `ms-vscode.cmake-tools` 做為 configuration provider。
 
+### 操作紀錄
+- 日期：`2026-03-05 19:55:02`
+- 目的：將目前專案推送到新建 GitHub 倉庫 `https://github.com/MMLL168/ESC_G431_VS.git`。
+- 指令：
+```powershell
+Set-Location 'D:\Work_202506\Git\ESC_SixStep\ST\ESC_SixStep'
+git init -b main
+git remote add origin https://github.com/MMLL168/ESC_G431_VS.git
+git add .
+git commit -m "Initial project import and build fixes"
+git push -u origin main
+```
+- 結果：推送成功，`main` 分支已建立並追蹤 `origin/main`。
+- 問題：無。
+- 處置：已完成遠端同步，後續可直接使用 `git push` 更新。
+
 
 
