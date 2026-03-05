@@ -47,12 +47,15 @@
 
 #define M1_VBUS_SW_FILTER_BW_FACTOR      6u
 /* ESC parameters conversion */
-/* 1060 us ON time is the minimum value to spin the motor*/
-/* 1860 us ON time is the target for the maximum speed */
-#define ESC_TON_MIN                      (APB1TIM_FREQ / 1000000 * 1060 )
-#define ESC_TON_MAX                      (APB1TIM_FREQ / 1000000 * 1860 )
-/* Arming : if 800 us <= TOn < 1060 us for 200 us, ESC is armed */
-#define ESC_TON_ARMING                   ((APB1TIM_FREQ /1000000) * 800 )
+/* TIM2 capture runs with LF_TIMER prescaler, so thresholds must be in TIM2 ticks. */
+#define ESC_CMD_TIM_FREQ                 (APB1TIM_FREQ / (LF_TIMER_PSC + 1U))
+#define ESC_US_TO_TICKS(us)              ((uint32_t)(((uint64_t)ESC_CMD_TIM_FREQ * (uint64_t)(us)) / 1000000ULL))
+
+/* PX4 throttle input range: 1000 us .. 2000 us */
+#define ESC_TON_MIN                      ESC_US_TO_TICKS(1000U)
+#define ESC_TON_MAX                      ESC_US_TO_TICKS(2000U)
+/* Arming: if 800 us <= TOn < 1000 us for ARMING_TIME, ESC is armed. */
+#define ESC_TON_ARMING                   ESC_US_TO_TICKS(800U)
 
 /* USER CODE BEGIN Additional parameters */
 

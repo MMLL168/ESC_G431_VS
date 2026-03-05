@@ -73,13 +73,13 @@
         <define key="M1_LOW_SIDE_IDLE_STATE" value="TURN_OFF" />
         <define key="M1_LOW_SIDE_SIGNALS_ENABLING" value="LS_PWM_TIMER" />
         <define key="M1_LS" value="0.000018" />
-        <define key="M1_MAX_APPLICATION_SPEED" value="15000" />
+        <define key="M1_MAX_APPLICATION_SPEED" value="26000" />
         <define key="M1_MAX_CONSECUTIVE_BEMF_ERRORS" value="3" />
         <define key="M1_MIN_APPLICATION_SPEED" value="0" />
-        <define key="M1_MOTOR_MAX_SPEED_RPM" value="15000" />
-        <define key="M1_MOTOR_NAME" value="Bull Running BR2804-1700" />
+        <define key="M1_MOTOR_MAX_SPEED_RPM" value="26000" />
+        <define key="M1_MOTOR_NAME" value="MT2204-2300KV" />
         <define key="M1_MOTOR_RATED_FLUX" value="0.000489898" />
-        <define key="M1_MOTOR_VOLTAGE_CONSTANT" value="0.1" />
+        <define key="M1_MOTOR_VOLTAGE_CONSTANT" value="0.074" />
         <define key="M1_NB_CONSECUTIVE_TESTS" value="10" />
         <define key="M1_NOMINAL_BUS_VOLTAGE_V" value="12" />
         <define key="M1_OBS_MINIMUM_SPEED_RPM" value="1500" />
@@ -130,7 +130,7 @@
         <define key="M1_PWM_TIMER_SELECTION" value="PWM_TIM1" />
         <define key="M1_PWM_TIMER_UP_IRQ" value="TIM1_UP_TIM16" />
         <define key="M1_REGULATION_EXECUTION_RATE" value="1" />
-        <define key="M1_RS" value="0.07" />
+        <define key="M1_RS" value="0.112" />
         <define key="M1_SHARED_SIGNAL_ENABLE" value="FALSE" />
         <define key="M1_SP_KDDIV" value="16" />
         <define key="M1_SP_KIDIV" value="16384" />

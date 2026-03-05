@@ -31,7 +31,7 @@
 /******** MAIN AND AUXILIARY SPEED/POSITION SENSOR(S) SETTINGS SECTION ********/
 
 /*** Speed measurement settings ***/
-#define MAX_APPLICATION_SPEED_RPM          15000 /*!< rpm, mechanical */
+#define MAX_APPLICATION_SPEED_RPM          26000 /*!< rpm, mechanical */
 #define MIN_APPLICATION_SPEED_RPM          (0 + (U_RPM / SPEED_UNIT)) /*!< rpm, mechanical, absolute value */
 #define M1_SS_MEAS_ERRORS_BEFORE_FAULTS    3 /*!< Number of speed measurement errors before main sensor goes in fault */
 
@@ -115,19 +115,19 @@
 /******************************   START-UP PARAMETERS   **********************/
 
 /* Phase 1 */
-#define PHASE1_DURATION                    500 /* milliseconds */
+#define PHASE1_DURATION                    700 /* milliseconds */
 #define PHASE1_FINAL_SPEED_UNIT            (0*SPEED_UNIT/U_RPM)
-#define PHASE1_VOLTAGE_RMS                 0.8
+#define PHASE1_VOLTAGE_RMS                 0.6
 
 /* Phase 2 */
-#define PHASE2_DURATION                    800 /* milliseconds */
-#define PHASE2_FINAL_SPEED_UNIT            (1500*SPEED_UNIT/U_RPM)
-#define PHASE2_VOLTAGE_RMS                 1.8
+#define PHASE2_DURATION                    1000 /* milliseconds */
+#define PHASE2_FINAL_SPEED_UNIT            (1200*SPEED_UNIT/U_RPM)
+#define PHASE2_VOLTAGE_RMS                 1.2
 
 /* Phase 3 */
-#define PHASE3_DURATION                    500 /* milliseconds */
-#define PHASE3_FINAL_SPEED_UNIT            (1500*SPEED_UNIT/U_RPM)
-#define PHASE3_VOLTAGE_RMS                 1.8
+#define PHASE3_DURATION                    900 /* milliseconds */
+#define PHASE3_FINAL_SPEED_UNIT            (2200*SPEED_UNIT/U_RPM)
+#define PHASE3_VOLTAGE_RMS                 1.6
 
 /* Phase 4 */
 #define PHASE4_DURATION                    0 /* milliseconds */
@@ -143,7 +143,7 @@
 #define ALIGN_STEP                         1 /*!< Step during rotor alignment*/
 
 /* Observer start-up output conditions  */
-#define OBS_MINIMUM_SPEED_RPM              1500
+#define OBS_MINIMUM_SPEED_RPM              1200
 
 #define NB_CONSECUTIVE_TESTS               10 /* corresponding to former NB_CONSECUTIVE_TESTS / (TF_REGULATION_RATE /  MEDIUM_FREQUENCY_TASK_RATE) */
 
