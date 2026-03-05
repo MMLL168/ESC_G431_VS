@@ -1,0 +1,99 @@
+
+直接可用指令（PowerShell）
+
+cd d:\Work_202506\Git\ESC_SixStep\ST\ESC_SixStep
+
+# 1) Configure
+& "C:\ST\STM32CubeIDE_1.18.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.cmake.win32_1.1.100.202601091506\tools\bin\cmake.exe" --preset Debug
+
+# 2) Build
+& "C:\ST\STM32CubeIDE_1.18.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.cmake.win32_1.1.100.202601091506\tools\bin\cmake.exe" --build --preset Debug -j
+
+# 3) Flash (ST-Link, SWD)
+& "C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe" -c port=SWD -d ".\build\Debug\ESC_SixStep.elf" -v -rst
+
+---
+
+## 作業準則（2026-03-05 起生效）
+
+1. 修改前先備份
+- 進行任何檔案修改前，先建立時間戳備份檔，避免修改失敗時無法還原。
+- 備份命名建議：`原檔名.bak_yyyyMMdd_HHmmss`。
+
+2. 詳細記錄到 `DevLog.md`
+- 每次重要操作都要記錄：目的、執行指令、結果、問題與處理方式。
+- 若有錯誤，需附上關鍵錯誤訊息與修正結論。
+- 每次由我完成檔案修改後，需自動新增一筆「操作紀錄」，不需手動填寫模板。
+
+3. 全部使用繁體中文
+- 後續回覆與 `DevLog.md` 紀錄，統一使用繁體中文。
+
+---
+
+## 每次操作紀錄模板
+
+> 使用方式：每次操作請複製以下區塊，完整填寫後追加到本檔案底部。
+
+### 操作紀錄
+- 日期：`YYYY-MM-DD HH:mm:ss`
+- 目的：
+- 指令：
+```powershell
+# 請填入實際執行指令
+```
+- 結果：
+- 問題：
+- 處置：
+
+### 操作紀錄
+- 日期：`2026-03-05 19:39:18`
+- 目的：將 `DevLog.md` 的模板改為修改後自動填寫，並示範一筆自動紀錄。
+- 指令：
+```powershell
+$ts = Get-Date -Format 'yyyyMMdd_HHmmss'; Copy-Item -Path 'DevLog.md' -Destination ("DevLog.md.bak_" + $ts)
+Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+```
+- 結果：已完成規則更新，並新增本筆自動填寫紀錄。
+- 問題：無。
+- 處置：後續每次我完成檔案修改後，將自動追加一筆完整操作紀錄。
+
+### 操作紀錄
+- 日期：`2026-03-05 19:50:02`
+- 目的：修正 `TIM2_IRQHandler` 重複定義造成的連結失敗，並驗證可成功編譯。
+- 指令：
+```powershell
+$ts = Get-Date -Format 'yyyyMMdd_HHmmss'
+Copy-Item 'MCSDK_v6.4.1-Full\MotorControl\MCSDK\MCLib\Any\Inc\esc.h' ("MCSDK_v6.4.1-Full\MotorControl\MCSDK\MCLib\Any\Inc\esc.h.bak_" + $ts)
+Copy-Item 'MCSDK_v6.4.1-Full\MotorControl\MCSDK\MCLib\Any\Src\esc.c' ("MCSDK_v6.4.1-Full\MotorControl\MCSDK\MCLib\Any\Src\esc.c.bak_" + $ts)
+Copy-Item 'Src\stm32g4xx_mc_it.c' ("Src\stm32g4xx_mc_it.c.bak_" + $ts)
+
+$env:Path = "C:\ST\STM32CubeIDE_1.18.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740\tools\bin;C:\ST\STM32CubeIDE_1.18.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.ninja.win32_1.1.100.202601091506\tools\bin;C:\ST\STM32CubeIDE_1.18.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.cmake.win32_1.1.100.202601091506\tools\bin;" + $env:Path
+cmake --build --preset Debug -j
+```
+- 結果：連結成功，產出 `build/Debug/ESC_SixStep.elf`。
+- 問題：`main.c` 仍顯示 14 個 IntelliSense 識別項未定義問題（非實際編譯錯誤）。
+- 處置：
+	1. 將 `esc.c` 的 `TIM2_IRQHandler` 改為 `esc_tim2_pwm_input_irq()`，避免與系統 IRQ symbol 衝突。
+	2. 在 `stm32g4xx_mc_it.c` 的 `PERIOD_COMM_IRQHandler()` 內呼叫 `esc_tim2_pwm_input_irq()`，保留 ESC PWM 量測與 watchdog 更新流程。
+
+### 操作紀錄
+- 日期：`2026-03-05 19:51:57`
+- 目的：清除 `main.c` 的 14 個 IntelliSense 未定義問題，讓 Problems 與實際編譯一致。
+- 指令：
+```powershell
+# 新增 VS Code 設定檔
+# .vscode/settings.json
+# .vscode/c_cpp_properties.json
+
+# 驗證問題狀態
+get_errors(main.c)
+```
+- 結果：`Src/main.c` 顯示 `No errors found`，14 個問題已清空。
+- 問題：無。
+- 處置：
+	1. 設定 `C_Cpp.default.compileCommands` 指向 `build/Debug/compile_commands.json`。
+	2. 設定 ARM GCC `compilerPath` 與 `windows-gcc-arm` IntelliSense 模式。
+	3. 保留 `ms-vscode.cmake-tools` 做為 configuration provider。
+
+
+

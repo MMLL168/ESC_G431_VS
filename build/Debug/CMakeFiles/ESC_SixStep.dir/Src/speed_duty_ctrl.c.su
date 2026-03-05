@@ -1,0 +1,11 @@
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/cmake/stm32cubemx/../../Inc/speed_duty_ctrl.h:190:24:SDC_GetDutyCycleRef	24	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/cmake/stm32cubemx/../../Inc/speed_duty_ctrl.h:476:20:SDC_GetOpenLoopFlag	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/cmake/stm32cubemx/../../Inc/speed_duty_ctrl.h:512:20:SDC_SetDutyCycleRefOl	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/cmake/stm32cubemx/../../Inc/speed_duty_ctrl.h:641:20:SDC_GetRevUpFlag	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/speed_duty_ctrl.c:52:13:SDC_Clear	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/speed_duty_ctrl.c:101:13:SDC_ExecRamp	40	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/speed_duty_ctrl.c:214:17:SDC_CalcSpeedReference	32	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/speed_duty_ctrl.c:323:13:SDC_StopSpeedRamp	24	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/speed_duty_ctrl.c:355:10:SDC_CalcOpenLoopDutyCycleVM	24	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/speed_duty_ctrl.c:380:10:SDC_CalcOpenLoopDutyCycle	24	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/speed_duty_ctrl.c:411:6:SDC_Potentiometer_Run	24	static

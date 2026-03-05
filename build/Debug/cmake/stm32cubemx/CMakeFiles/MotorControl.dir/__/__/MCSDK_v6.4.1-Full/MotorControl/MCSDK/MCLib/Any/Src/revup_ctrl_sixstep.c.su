@@ -1,0 +1,6 @@
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/cmake/stm32cubemx/../../Inc/speed_duty_ctrl.h:138:20:SDC_SetControlMode	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/MCSDK_v6.4.1-Full/MotorControl/MCSDK/MCLib/Any/Src/revup_ctrl_sixstep.c:80:13:RUC_6S_Clear	32	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/MCSDK_v6.4.1-Full/MotorControl/MCSDK/MCLib/Any/Src/revup_ctrl_sixstep.c:137:13:RUC_6S_UpdatePulse	24	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/MCSDK_v6.4.1-Full/MotorControl/MCSDK/MCLib/Any/Src/revup_ctrl_sixstep.c:160:13:RUC_6S_Exec	24	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/MCSDK_v6.4.1-Full/MotorControl/MCSDK/MCLib/Any/Src/revup_ctrl_sixstep.c:273:6:RUC_6S_IsAlignStageNow	24	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/MCSDK_v6.4.1-Full/MotorControl/MCSDK/MCLib/Any/Src/revup_ctrl_sixstep.c:312:13:RUC_6S_ObserverSpeedReached	24	static

@@ -1,0 +1,17 @@
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/cmake/stm32cubemx/../../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_gpio.h:719:22:LL_GPIO_LockPin	24	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/cmake/stm32cubemx/../../Inc/regular_conversion_manager.h:75:24:RCM_GetRegularConv	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:83:13:MCboot	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:154:13:MC_RunMotorControlTasks	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:259:13:TSK_SetChargeBootCapDelayM1	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:270:13:TSK_SetBrakeDelayM1	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:281:13:TSK_SetOTFDetectionDelayM1	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:292:13:TSK_ChargeBootCapDelayHasElapsedM1	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:308:13:TSK_SetStopPermanencyTimeM1	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:319:13:TSK_StopPermanencyTimeHasElapsedM1	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:335:13:TSK_BrakeDelayHasElapsedM1	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:351:13:TSK_OTFDetectionDelayHasElapsedM1	16	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:366:13:TSK_SafetyTask	8	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:389:13:TSK_SafetyTask_PWMOFF	40	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:447:13:TSK_HardwareFaultTask	8	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:460:13:UI_HandleStartStopButton_cb	8	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/mc_tasks.c:478:13:mc_lock_pins	8	static
