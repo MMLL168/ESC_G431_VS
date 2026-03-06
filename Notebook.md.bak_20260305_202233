@@ -1,0 +1,75 @@
+# Notebook：硬體資訊與專案對應
+
+## 使用者資訊
+- 使用者：Marlon
+
+## 硬體資訊摘要
+- 控制板：`B-G431B-ESC1`
+- MCU：`STM32G431CB`（`UFQFPN48`）
+- 控制方式：`SIX_STEP`（六步方波）
+- 專案來源：`STM32 Motor Control Workbench / MCSDK`
+- MCSDK 版本：`6.4.1`
+- CubeMX 版本：`6.17.0`
+- 系統時脈：`170 MHz`
+- 外部時脈：`HSE 8 MHz`
+- PWM：`TIM1`，`20 kHz`
+- 速度回授：`Sensorless ADC (BEMF)`
+- 低頻計時器：`TIM2`
+- 通訊介面：`USART2 + DMA1`（MCP/ASPEP）
+
+## 關鍵設定來源（檔案）
+
+### 1. 專案/板子/控制模式
+- `ESC_SixStep.ioc`
+	- `MotorControl.BOARD=B-G431B-ESC1`
+	- `MotorControl.DRIVE_TYPE=SIX_STEP`
+	- `MotorControl.MCU=STM32G431CB`
+	- `MotorControl.CLOCK_FREQUENCY=CPU_CLK_170_MHZ`
+- `ESC_SixStep.wbdef`
+	- `BOARD=B-G431B-ESC1`
+	- `M1_DRIVE_TYPE=SIX_STEP`
+	- `MCU=STM32G431CB`
+	- `MC_WORKBENCH_VERSION=6.4.1`
+
+### 2. 馬達功率級與PWM
+- `Src/tim.c`
+	- `MX_TIM1_Init()`：三相 PWM 主要計時器
+	- `MX_TIM2_Init()`：ESC PWM 輸入量測/低頻流程
+- `Inc/parameters_conversion_g4xx.h`
+	- `PERIOD_COMM_IRQHandler -> TIM2_IRQHandler` 映射
+
+### 3. 六步控制核心
+- `Src/mc_tasks_sixstep.c`：六步控制主要任務
+- `Src/pwmc_sixstep.c`：六步 PWM 切相/驅動
+- `Src/bemf_ADC_fdbk_sixstep.c`：BEMF 量測與零交越偵測
+- `Src/speed_duty_ctrl.c`：速度/占空比控制
+
+### 4. 量測與保護
+- `Src/adc.c`：ADC1/ADC2 初始化與通道配置
+- `Inc/drive_parameters.h`：驅動參數
+- `Inc/power_stage_parameters.h`：功率板參數
+- `Src/mc_parameters.c`：參數實作與組合
+
+### 5. 中斷與流程
+- `Src/stm32g4xx_it.c`：STM32 基本 IRQ 入口
+- `Src/stm32g4xx_mc_it.c`：Motor Control 相關 IRQ 實作
+- `MCSDK_v6.4.1-Full/MotorControl/MCSDK/MCLib/Any/Src/esc.c`：ESC PWM 輸入處理
+
+### 6. 建置與輸出
+- `CMakePresets.json`：`Debug/Release` preset
+- `cmake/gcc-arm-none-eabi.cmake`：ARM GCC 工具鏈
+- `CMakeLists.txt`：主專案入口
+- 輸出檔：`build/Debug/ESC_SixStep.elf`
+
+## 專案內「項目 -> 檔案」快速對照
+| 項目 | 對應檔案 |
+|---|---|
+| 板卡型號與MCU設定 | `ESC_SixStep.ioc`, `ESC_SixStep.wbdef` |
+| 六步控制狀態機 | `Src/mc_tasks_sixstep.c` |
+| 切相/PWM 輸出 | `Src/pwmc_sixstep.c`, `Src/tim.c` |
+| BEMF 偵測 | `Src/bemf_ADC_fdbk_sixstep.c`, `Src/adc.c` |
+| 速度與占空比 | `Src/speed_duty_ctrl.c` |
+| IRQ 流程 | `Src/stm32g4xx_it.c`, `Src/stm32g4xx_mc_it.c`, `Inc/parameters_conversion_g4xx.h` |
+| ESC 輸入脈寬解析 | `MCSDK_v6.4.1-Full/.../esc.c` |
+| 編譯與連結 | `CMakeLists.txt`, `CMakePresets.json`, `cmake/gcc-arm-none-eabi.cmake` |
+

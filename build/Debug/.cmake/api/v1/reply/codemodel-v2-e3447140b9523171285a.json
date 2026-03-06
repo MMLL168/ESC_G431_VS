@@ -62,21 +62,21 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ESC_SixStep::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ESC_SixStep-Debug-fd03332de2a9ec546816.json",
+					"jsonFile" : "target-ESC_SixStep-Debug-919a0f6a250792ccfd1e.json",
 					"name" : "ESC_SixStep",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "MotorControl::@768a070a0fe75716b479",
-					"jsonFile" : "target-MotorControl-Debug-d77c66b4252b68216bdd.json",
+					"jsonFile" : "target-MotorControl-Debug-c4880a0767e3d289719b.json",
 					"name" : "MotorControl",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "STM32_Drivers::@768a070a0fe75716b479",
-					"jsonFile" : "target-STM32_Drivers-Debug-927636682ad0536268ae.json",
+					"jsonFile" : "target-STM32_Drivers-Debug-d2648960e52444829f53.json",
 					"name" : "STM32_Drivers",
 					"projectIndex" : 0
 				}
@@ -92,6 +92,6 @@
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 6
+		"minor" : 8
 	}
 }

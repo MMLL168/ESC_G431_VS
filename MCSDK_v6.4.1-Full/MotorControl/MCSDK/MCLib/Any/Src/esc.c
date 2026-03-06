@@ -72,7 +72,8 @@ void esc_boot(ESC_Handle_t * pHandle)
   LL_TIM_EnableCounter(TIMx);
 #ifdef ESC_BEEP_FEATURE
   pHandle->beep_state = SM_BEEP_1;
-  pHandle->phase_check_status = false;
+  pHandle->phase_check_status = true;
+  pHandle->start_check_flag = false;
 #endif
   
 }
@@ -118,7 +119,7 @@ ESC_State_t esc_pwm_run(ESC_Handle_t * pHandle)
   {
    case ESC_ARMING:
     {
-      if((pHandle->Ton_value >= pESC_params->Ton_arming) && (pHandle->Ton_value < pESC_params->Ton_min)) 
+      if((pHandle->Ton_value >= pESC_params->Ton_arming) && (pHandle->Ton_value <= pESC_params->Ton_min)) 
       {
         pHandle->arming_counter++;
         if(pHandle->arming_counter > pESC_params->ARMING_TIME)    
@@ -139,7 +140,7 @@ ESC_State_t esc_pwm_run(ESC_Handle_t * pHandle)
     break;  
    case ESC_ARMED:
     {
-      if (pHandle->Ton_value >= pESC_params->Ton_min)
+      if (pHandle->Ton_value > pESC_params->Ton_min)
       {
         /* Next state */
         /* This command sets what will be the first speed ramp after the 
@@ -595,17 +596,23 @@ static void esc_reset_pwm_ch(ESC_Handle_t * pHandle)
   */
 void esc_tim2_pwm_input_irq(void)
 {
+  uint32_t pulse_ticks = LL_TIM_OC_GetCompareCH2(TIM2);
+  uint32_t pulse_min_ticks = ESC_M1.pESC_params->Ton_arming;
+  uint32_t pulse_max_ticks = ESC_M1.pESC_params->Ton_max + ESC_M1.pESC_params->delta_Ton_max;
 
-  /* Clear TIM1 Capture compare interrupt pending bit */
-  LL_TIM_ClearFlag_CC1 (TIM2);
+  /* TIM2 CH1 is also used by six-step speed timing, so only validate pulse width on CH2. */
+  if ((pulse_ticks >= pulse_min_ticks) &&
+      (pulse_ticks <= pulse_max_ticks))
+  {
+    ESC_M1.Ton_value = esc_capture_filter(&ESC_M1, pulse_ticks);
 
-  /* Get Pulse width and low pass filter it to remove spurious informations */    
-  ESC_M1.Ton_value = esc_capture_filter(&ESC_M1, LL_TIM_OC_GetCompareCH2(TIM2));
-
-  /* Fail safe mechanism: stops the motor is the PWM input is disabled */
-  ESC_M1.watchdog_counter++;
-  if(ESC_M1.watchdog_counter == 0)
-     ESC_M1.watchdog_counter = 1;
+    /* Count only valid edges; missing valid captures will naturally trigger timeout. */
+    ESC_M1.watchdog_counter++;
+    if (ESC_M1.watchdog_counter == 0U)
+    {
+      ESC_M1.watchdog_counter = 1U;
+    }
+  }
 }
 
 /******************* (C) COPYRIGHT 2025 STMicroelectronics *****END OF FILE****/

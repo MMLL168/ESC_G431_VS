@@ -812,7 +812,19 @@ uint8_t RI_GetRegisterGlobal(uint16_t regID,uint8_t typeID,uint8_t * data,uint16
 
             case MC_REG_HEATS_TEMP:
             {
-              *regdata16 = NTC_GetAvTemp_C(&TempSensor_M1);
+              int16_t heatsTemp = NTC_GetAvTemp_C(&TempSensor_M1);
+
+              /* Avoid unsigned wrap in some UI paths when negative temperatures are reported. */
+              if (heatsTemp < 0)
+              {
+                heatsTemp = 0;
+              }
+              else if (heatsTemp > 150)
+              {
+                heatsTemp = 150;
+              }
+
+              *regdata16 = heatsTemp;
               break;
             }
 

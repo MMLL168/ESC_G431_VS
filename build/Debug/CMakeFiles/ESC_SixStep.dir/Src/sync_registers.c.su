@@ -21,4 +21,4 @@ D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/sync_registers.c:33:9:RI_SetRe
 D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/sync_registers.c:167:9:RI_SetRegisterMotor1	136	static
 D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/sync_registers.c:509:9:RI_GetRegisterGlobal	64	static
 D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/sync_registers.c:680:11:RI_GetRegisterMotor1	168	static
-D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/sync_registers.c:1112:9:RI_MovString	40	static
+D:/Work_202506/Git/ESC_SixStep/ST/ESC_SixStep/Src/sync_registers.c:1124:9:RI_MovString	40	static

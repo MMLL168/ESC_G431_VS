@@ -30,6 +30,9 @@
 #include "parameters_conversion.h"
 #include "esc.h"
 
+/* 1: pure Motor Pilot mode, do not process PA15 ESC input in TIM2 IRQ. */
+#define PURE_MOTOR_PILOT_MODE 1
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -139,8 +142,10 @@ void PERIOD_COMM_IRQHandler(void)
     /* Nothing to do. */
   }
 
-  /* Keep ESC PWM input capture/watchdog update in the same TIM2 IRQ flow. */
+  /* Keep ESC capture disabled in pure Motor Pilot mode to avoid TIM2 contention. */
+#if !PURE_MOTOR_PILOT_MODE
   esc_tim2_pwm_input_irq();
+#endif
 
   MC_Perf_Measure_Stop(&PerfTraces, (uint8_t)MEASURE_TSK_SpeedTimerM1);
 }

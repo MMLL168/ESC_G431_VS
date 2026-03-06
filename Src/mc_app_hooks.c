@@ -24,7 +24,13 @@
 #include "mc_type.h"
 #include "mc_app_hooks.h"
 #include "mc_config.h"
+#include "mc_api.h"
 #include "esc.h"
+
+/* 1: disable PA15 ESC input path and keep pure Motor Pilot (MCP/MCI) control. */
+#define PURE_MOTOR_PILOT_MODE 1
+/* 1: one-shot startup diagnostic to bypass Motor Pilot UI command path. */
+#define AUTO_START_DIAG_MODE 1
 
 /** @addtogroup MCSDK
   * @{
@@ -50,7 +56,9 @@
  */
 __weak void MC_APP_BootHook(void)
 {
+#if !PURE_MOTOR_PILOT_MODE
   esc_boot(&ESC_M1);
+#endif
 /* USER CODE BEGIN BootHook */
 
 /* USER CODE END BootHook */
@@ -64,7 +72,25 @@ __weak void MC_APP_BootHook(void)
  */
 __weak void MC_APP_PostMediumFrequencyHook_M1(void)
 {
+  static bool auto_start_issued = false;
+
+#if (PURE_MOTOR_PILOT_MODE && AUTO_START_DIAG_MODE)
+  if (!auto_start_issued)
+  {
+    if ((MC_GetSTMStateMotor1() == IDLE) &&
+        (MC_GetOccurredFaultsMotor1() == MC_NO_FAULTS) &&
+        (MC_GetCurrentFaultsMotor1() == MC_NO_FAULTS))
+    {
+      MC_ProgramSpeedRampMotor1(1800, 3000);
+      (void)MC_StartMotor1();
+      auto_start_issued = true;
+    }
+  }
+#endif
+
+#if !PURE_MOTOR_PILOT_MODE
   esc_pwm_control(&ESC_M1);
+#endif
 /* USER SECTION BEGIN PostMediumFrequencyHookM1 */
 
 /* USER SECTION END PostMediumFrequencyHookM1 */

@@ -33,15 +33,15 @@
 /*** Speed measurement settings ***/
 #define MAX_APPLICATION_SPEED_RPM          26000 /*!< rpm, mechanical */
 #define MIN_APPLICATION_SPEED_RPM          (0 + (U_RPM / SPEED_UNIT)) /*!< rpm, mechanical, absolute value */
-#define M1_SS_MEAS_ERRORS_BEFORE_FAULTS    3 /*!< Number of speed measurement errors before main sensor goes in fault */
+#define M1_SS_MEAS_ERRORS_BEFORE_FAULTS    25 /*!< Number of speed measurement errors before main sensor goes in fault */
 
 /****** Bemf Observer ****/
 #define M1_BEMF_SAMPLING_TIME              LL_ADC_SAMPLING_CYCLE(47)
-#define BEMF_AVERAGING_FIFO_DEPTH          8 /*!< depth of the FIFO used to average  mechanical speed in 0.1Hz resolution */
+#define BEMF_AVERAGING_FIFO_DEPTH          16 /*!< depth of the FIFO used to average mechanical speed in 0.1Hz resolution */
 #define VARIANCE_THRESHOLD                 0.1 /*!< Maximum accepted variance on speed estimates (percentage) */
-#define BEMF_THRESHOLD_PWM_PERC            73 /*!< Percentage of Bus for zero crossing detection with on-sensing */
-#define BEMF_THRESHOLD_HIGH_PERC           100 /*!< Percentage of Bus for zero crossing detection with on-sensing and low side modulation */
-#define BEMF_THRESHOLD_LOW_PERC  	       1	/*!< Percentage of Bus for zero crossing detection with on-sensing and high side modulation */
+#define BEMF_THRESHOLD_PWM_PERC            65 /*!< Percentage of Bus for zero crossing detection with on-sensing */
+#define BEMF_THRESHOLD_HIGH_PERC           95 /*!< Percentage of Bus for zero crossing detection with on-sensing and low side modulation */
+#define BEMF_THRESHOLD_LOW_PERC  	       3	/*!< Percentage of Bus for zero crossing detection with on-sensing and high side modulation */
 #define BEMF_ADC_TRIG_TIME_DPP             ((uint16_t)921) /*!< 1/1024 of PWM period elapsed */
 #define BEMF_ADC_TRIG_TIME_ON_DPP          ((uint16_t)256) /*!< 1/1024 of PWM period  elapsed */
 #define BEMF_PWM_ON_ENABLE_THRES_DPP       ((uint16_t)716) /*!< 1/1024 of PWM period   elapsed */
@@ -54,7 +54,7 @@
 #define DEMAG_RUN_STEP_RATIO               ((uint16_t)20) /*!< Percentage of step time allowed for  demagnetization */
 #define DEMAG_REVUP_STEP_RATIO             ((uint16_t)20) /*!< Percentage of step time allowed for demagnetization */
 
-#define M1_MAX_CONSECUTIVE_BEMF_ERRORS     3 /*!< Max # of consecutive zero crossing event not detected */
+#define M1_MAX_CONSECUTIVE_BEMF_ERRORS     10 /*!< Max # of consecutive zero crossing event not detected */
 
 #define ADC_AWD_FILTER_NUMBER              (uint8_t)0 /*!< Analog watchdog filtering configuration */
 
@@ -75,8 +75,8 @@
 #define SW_DEADTIME_NS                     700 /*!< Dead-time to be inserted by FW, only if low side signals are enabled */
 
 /* Speed control loop */
-#define SPEED_LOOP_FREQUENCY_HZ            (uint16_t)1000 /*!<Execution rate of speed regulation loop (Hz) */
-#define PID_SPEED_KP_DEFAULT               384/(SPEED_UNIT/10) /* Workbench compute the gain for 01Hz unit*/
+#define SPEED_LOOP_FREQUENCY_HZ            (uint16_t)500 /*!< Execution rate of speed regulation loop (Hz) */
+#define PID_SPEED_KP_DEFAULT               220/(SPEED_UNIT/10) /* Lower Kp to reduce speed hunting */
 #define PID_SPEED_KI_DEFAULT               0/(SPEED_UNIT/10) /* Workbench compute the gain for 01Hz unit*/
 #define PID_SPEED_KD_DEFAULT               0/(SPEED_UNIT/10) /* Workbench compute the gain for 01Hz unit*/
 
@@ -100,7 +100,7 @@
 /* Default settings */
 #define DEFAULT_CONTROL_MODE               MCM_SPEED_MODE
 #define DEFAULT_DRIVE_MODE                 VM /*!< VOLTAGE_MODE (VM) or CURRENT_MODE (CM) */
-#define DEFAULT_TARGET_SPEED_RPM           1000
+#define DEFAULT_TARGET_SPEED_RPM           1500
 #define DEFAULT_TARGET_SPEED_UNIT          (DEFAULT_TARGET_SPEED_RPM*SPEED_UNIT/U_RPM)
 
 /**************************    FIRMWARE PROTECTIONS SECTION   *****************/
@@ -115,19 +115,19 @@
 /******************************   START-UP PARAMETERS   **********************/
 
 /* Phase 1 */
-#define PHASE1_DURATION                    700 /* milliseconds */
+#define PHASE1_DURATION                    900 /* milliseconds */
 #define PHASE1_FINAL_SPEED_UNIT            (0*SPEED_UNIT/U_RPM)
-#define PHASE1_VOLTAGE_RMS                 0.6
+#define PHASE1_VOLTAGE_RMS                 1.2
 
 /* Phase 2 */
-#define PHASE2_DURATION                    1000 /* milliseconds */
+#define PHASE2_DURATION                    1700 /* milliseconds */
 #define PHASE2_FINAL_SPEED_UNIT            (1200*SPEED_UNIT/U_RPM)
-#define PHASE2_VOLTAGE_RMS                 1.2
+#define PHASE2_VOLTAGE_RMS                 2.2
 
 /* Phase 3 */
-#define PHASE3_DURATION                    900 /* milliseconds */
+#define PHASE3_DURATION                    2200 /* milliseconds */
 #define PHASE3_FINAL_SPEED_UNIT            (2200*SPEED_UNIT/U_RPM)
-#define PHASE3_VOLTAGE_RMS                 1.6
+#define PHASE3_VOLTAGE_RMS                 2.8
 
 /* Phase 4 */
 #define PHASE4_DURATION                    0 /* milliseconds */
@@ -143,7 +143,7 @@
 #define ALIGN_STEP                         1 /*!< Step during rotor alignment*/
 
 /* Observer start-up output conditions  */
-#define OBS_MINIMUM_SPEED_RPM              1200
+#define OBS_MINIMUM_SPEED_RPM              300
 
 #define NB_CONSECUTIVE_TESTS               10 /* corresponding to former NB_CONSECUTIVE_TESTS / (TF_REGULATION_RATE /  MEDIUM_FREQUENCY_TASK_RATE) */
 
